@@ -1,0 +1,25 @@
+{
+  "name": "openweathermap",
+  "version": "1.0.0",
+  "description": "simple app to show weather data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "watch": "webpack -d --progress --colors --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrennerSpear/openweathermap.git"
+  },
+  "author": "Brenner Spear",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrennerSpear/openweathermap/issues"
+  },
+  "homepage": "https://github.com/BrennerSpear/openweathermap#readme",
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "webpack": "^2.4.1"
+  }
+}
