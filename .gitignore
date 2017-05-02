@@ -39,3 +39,6 @@ jspm_packages
 
 #build folder
 /client/build
+
+#env variable
+.env

@@ -1,5 +1,5 @@
 {
-  "name": "openweathermap",
+  "name": "openweathermap-demo",
   "version": "1.0.0",
   "description": "simple app to show weather data",
   "main": "index.js",
@@ -30,7 +30,9 @@
   },
   "dependencies": {
     "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
     "express": "^4.15.2",
-    "morgan": "^1.8.1"
+    "morgan": "^1.8.1",
+    "openweathermap": "^1.0.0"
   }
 }
