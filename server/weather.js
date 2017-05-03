@@ -47,8 +47,8 @@ const getRelevantData = function(data) {
 }
 
 exports.forecast = function(req, res) {
-  // console.log(req.query)
-  getForcaseAysnc(queryParams)
+  console.log(req.query)
+  getForcaseAysnc({q: req.query.city})
   .then(data => {
     const [city, country, ranges, weather] = getRelevantData(data)
     const relevantData = {

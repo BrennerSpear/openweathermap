@@ -50,17 +50,22 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getWeatherData()
+    this.getWeatherData('San_Francisco')
   }
 
-  getWeatherData() {
-    axios.get('/weather/')
+  getWeatherData(city) {
+    axios.get('/weather/', {
+      params: {
+        city: city
+      }
+    })
     .then(data => {
       const city = data.data.city
       const country = data.data.country
       const ranges = data.data.ranges
       const weather = data.data.weather
       this.runCharts(city, ranges)
+      this.setState({city: ''})
     })
     .catch(err => {
       console.log('err:', err)
@@ -87,7 +92,8 @@ export default class App extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     if(this.state.city !== '') {
-      console.log('city:',this.state.city)
+      const city = this.state.city.split(' ').join('_')
+      this.getWeatherData(city)
     }
   }
   
@@ -96,7 +102,7 @@ export default class App extends React.Component {
       <div>
         <div id="chart-data"></div>
           city:
-          <input type="text" list="cities" name="city" onChange={this.handleChange}></input>
+          <input type="text" list="cities" name="city" value={this.state.city} onChange={this.handleChange}></input>
           <datalist id="cities">
             <option value="San Francisco"></option>
             <option value="New York"></option>
