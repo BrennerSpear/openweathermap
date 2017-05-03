@@ -108,9 +108,16 @@ export default class App extends React.Component {
   }
 
   switchUnits() {
-    const chartData = this.state.units === 'F' ? this.state.currentChartDataC : this.state.currentChartDataF
-    Highcharts.chart('chart-data', chartData)
+    var chartData
 
+    if(!this.state.currentChartDataF) {
+      chartData = this.state.units === 'F' ? this.state.chartDataC : this.state.chartDataF
+    }
+    else {
+      chartData = this.state.units === 'F' ? this.state.currentChartDataC : this.state.currentChartDataF
+    }
+
+    Highcharts.chart('chart-data', chartData)
     this.setState({
       units: (this.state.units === 'F' ? 'C' : 'F')
     })
@@ -158,7 +165,8 @@ export default class App extends React.Component {
             </div>
             <br/>
             <div className="text-center">
-              <input type="button" onClick={this.switchUnits} value={"Switch to " + (this.state.units ==='F' ? 'Celcius' : 'Fahrenheit')}></input>
+              {/*<input type="button" onClick={this.switchUnits} value={"Switch to " + (this.state.units ==='F' ? 'Celcius' : 'Fahrenheit')}></input>*/}
+              <Button bsStyle="primary" onClick={this.switchUnits}>{"Switch to " + (this.state.units ==='F' ? 'Celcius' : 'Fahrenheit')}</Button>
             </div>
 
             </Col>
