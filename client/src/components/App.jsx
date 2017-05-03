@@ -44,6 +44,9 @@ export default class App extends React.Component {
     this.state = {
       data: 'hello world'
     }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -72,11 +75,37 @@ export default class App extends React.Component {
 
     Highcharts.chart('chart-data', chartData)
   }
+
+  handleChange(e) {
+    const value = e.target.value
+    const name = e.target.name
+    this.setState({
+      [name] : value
+    })
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    if(this.state.city !== '') {
+      console.log('city:',this.state.city)
+    }
+  }
   
   render () {
     return (
       <div>
         <div id="chart-data"></div>
+          city:
+          <input type="text" list="cities" name="city" onChange={this.handleChange}></input>
+          <datalist id="cities">
+            <option value="San Francisco"></option>
+            <option value="New York"></option>
+            <option value="Berlin"></option>
+            <option value="San Jose"></option>
+            <option value="Paris"></option>
+            <option value="Tokyo"></option>
+          </datalist>
+          <button onClick={this.handleSubmit}>Add to graph</button>
       </div>
     )
   }
