@@ -16,6 +16,7 @@ export default class App extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.switchUnits = this.switchUnits.bind(this)
   }
 
   componentDidMount() {
@@ -84,11 +85,21 @@ export default class App extends React.Component {
       this.getWeatherData(city)
     }
   }
+
+  switchUnits() {
+    const chartData = this.state.units === 'F' ? this.state.chartDataC : this.state.chartDataF
+    Highcharts.chart('chart-data', chartData)
+    
+    this.setState({
+      units: (this.state.units === 'F' ? 'C' : 'F')
+    })
+  }
   
   render () {
     return (
       <div>
         <div id="chart-data"></div>
+        <div>
           city:
           <input type="text" list="cities" name="city" value={this.state.city} onChange={this.handleChange}></input>
           <datalist id="cities">
@@ -100,6 +111,10 @@ export default class App extends React.Component {
             <option value="Tokyo"></option>
           </datalist>
           <button onClick={this.handleSubmit}>Add to graph</button>
+          </div>
+          <div>
+          <input type="button" onClick={this.switchUnits} value={"Switch to " + (this.state.units ==='F' ? 'Celcius' : 'Fahrenheit')}></input>
+          </div>
       </div>
     )
   }
