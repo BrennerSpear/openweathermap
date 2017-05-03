@@ -58,6 +58,7 @@ export default class App extends React.Component {
 
     Highcharts.chart('chart-data', chartData)
   }
+  
   render () {
     return (
       <div>
