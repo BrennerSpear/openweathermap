@@ -17,9 +17,9 @@ exports.initialize = function() {
       },
 
       tooltip: {
-          crosshairs: true,
-          shared: true,
-          valueSuffix: '°C'
+          formatter: function () {
+            return 'Weather: <b>' + this.point.weather + '</b>';
+        }
       },
 
       legend: {
@@ -33,8 +33,8 @@ const getAverages = function(ranges) {
   var averages = []
   var average
   for(var i=0; i<ranges.length; i++) {
-    average = ((ranges[i][1] + ranges[i][2]) / 2)
-    averages.push([ranges[i][0], average])
+    average = ((ranges[i].high + ranges[i].low) / 2)
+    averages.push({x: ranges[i].x, y: average, weather: ranges[i].weather})
   }
   return averages
 }

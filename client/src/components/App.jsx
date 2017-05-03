@@ -44,14 +44,12 @@ export default class App extends React.Component {
     var country
     var rangesF
     var rangesC
-    var weather
 
     axios.get('/weather', {params: {city: city, units: 'imperial'}})
     .then(data => {
       cityString = data.data.city
       country = data.data.country
       rangesF = data.data.ranges
-      weather = data.data.weather
 
       return axios.get('/weather', {params: {city: city, units: 'metric'}})
     })

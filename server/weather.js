@@ -23,7 +23,6 @@ const getRelevantData = function(data) {
   const city = data.city.name
   const country = data.city.country
   var ranges = []
-  var weather = []
 
   const days = data.list
 
@@ -38,11 +37,10 @@ const getRelevantData = function(data) {
     max = days[i].main.temp_max
     weatherDesc = days[i].weather[0].description
 
-    ranges.push([date, min, max])
-    weather.push([date, weatherDesc])
+    ranges.push({x: date, low: min, high: max, weather: weatherDesc})
   }
 
-  return [city, country, ranges, weather]
+  return [city, country, ranges]
 }
 
 exports.forecast = function(req, res) {
