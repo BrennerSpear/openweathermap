@@ -37,12 +37,13 @@ const getAverages = function(ranges) {
   return averages
 }
 
-exports.createCityData = function(name, ranges, colorInteger) {
-  const averages = getAverages(ranges)
+exports.createCityData = function(name, rangesF, rangesC, colorInteger) {
+  const averagesF = getAverages(rangesF)
+  const averagesC = getAverages(rangesC)
 
   return [{
           name: name,
-          data: averages,
+          data: averagesF,
           zIndex: 1,
           marker: {
               fillColor: 'white',
@@ -51,7 +52,25 @@ exports.createCityData = function(name, ranges, colorInteger) {
           }
       }, {
           name: 'Range',
-          data: ranges,
+          data: rangesF,
+          type: 'arearange',
+          lineWidth: 0,
+          linkedTo: ':previous',
+          color: Highcharts.getOptions().colors[colorInteger],
+          fillOpacity: 0.3,
+          zIndex: 0
+      }, {
+          name: name,
+          data: averagesC,
+          zIndex: 1,
+          marker: {
+              fillColor: 'white',
+              lineWidth: 2,
+              lineColor: Highcharts.getOptions().colors[colorInteger]
+          }
+      }, {
+          name: 'Range',
+          data: rangesC,
           type: 'arearange',
           lineWidth: 0,
           linkedTo: ':previous',

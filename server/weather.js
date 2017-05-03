@@ -2,8 +2,7 @@ var weather = require('openweathermap')
 
 weather.defaults({
   APPID: process.env.OPENWEATHERKEY,
-  cnt: 15,
-  units: 'imperial'
+  cnt: 15
 })
 
 
@@ -48,7 +47,11 @@ const getRelevantData = function(data) {
 
 exports.forecast = function(req, res) {
   console.log(req.query)
-  getForcaseAysnc({q: req.query.city})
+  var options = {
+    q : req.query.city,
+    units: req.query.units
+  }
+  getForcaseAysnc(options)
   .then(data => {
     const [city, country, ranges, weather] = getRelevantData(data)
     const relevantData = {

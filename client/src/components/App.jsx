@@ -8,8 +8,10 @@ export default class App extends React.Component {
     super();
     this.state = {
       city: 'San Francisco',
-      chartData: chartUtil.initialize(),
-      cityCount: 0
+      chartDataF: chartUtil.initialize(),
+      chartDataC: chartUtil.initialize(),
+      cityCount: 0,
+      units: 'C'
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -21,35 +23,49 @@ export default class App extends React.Component {
   }
 
   getWeatherData(city) {
-    axios.get('/weather/', {
-      params: {
-        city: city
-      }
+
+    var cityString
+    var country
+    var rangesF
+    var rangesC
+    var weather
+
+    axios.get('/weather', {params: {city: city, units: 'imperial'}})
+    .then(data => {
+      cityString = data.data.city
+      country = data.data.country
+      rangesF = data.data.ranges
+      weather = data.data.weather
+
+      return axios.get('/weather', {params: {city: city, units: 'metric'}})
     })
     .then(data => {
-      const city = data.data.city
-      const country = data.data.country
-      const ranges = data.data.ranges
-      const weather = data.data.weather
-      this.runCharts(city, ranges)
+      rangesC = data.data.ranges
+      this.runCharts(cityString, rangesF, rangesC)
       this.setState({city: ''})
+      
     })
     .catch(err => {
       console.log('err:', err)
     })
   }
   
-  runCharts(city, ranges) {
-    var chartData = this.state.chartData
-    var [range, average] = chartUtil.createCityData(city, ranges, this.state.cityCount)
-    chartData.series.push(range)
-    chartData.series.push(average)
+  runCharts(city, rangesF, rangesC) {
+    var chartDataF = this.state.chartDataF
+    var chartDataC = this.state.chartDataC
+    var [rangeF, averageF, rangeC, averageC] = chartUtil.createCityData(city, rangesF, rangesC, this.state.cityCount)
+    chartDataF.series.push(rangeF)
+    chartDataF.series.push(averageF)
+    chartDataC.series.push(rangeC)
+    chartDataC.series.push(averageC)
 
     this.setState({
-      chartData: chartData,
+      chartDataF: chartDataF,
+      chartDataC: chartDataC,
       cityCount: this.state.cityCount + 1
     })
 
+    const chartData = this.state.units === 'F' ? chartDataF : chartDataC
     Highcharts.chart('chart-data', chartData)
   }
 
