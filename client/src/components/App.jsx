@@ -10,6 +10,7 @@ export default class App extends React.Component {
       city: 'San Francisco',
       chartDataF: chartUtil.initialize(),
       chartDataC: chartUtil.initialize(),
+      cities: [],
       cityCount: 0,
       units: 'C'
     }
@@ -42,8 +43,13 @@ export default class App extends React.Component {
     })
     .then(data => {
       rangesC = data.data.ranges
-      this.runCharts(cityString, rangesF, rangesC)
-      this.setState({city: ''})
+
+      if(!this.state.cities.includes(cityString)) {
+        this.runCharts(cityString, rangesF, rangesC)
+        var cities = this.state.cities
+        cities.push(cityString)
+        this.setState({city: '', cities: cities})
+      }
       
     })
     .catch(err => {
@@ -89,7 +95,7 @@ export default class App extends React.Component {
   switchUnits() {
     const chartData = this.state.units === 'F' ? this.state.chartDataC : this.state.chartDataF
     Highcharts.chart('chart-data', chartData)
-    
+
     this.setState({
       units: (this.state.units === 'F' ? 'C' : 'F')
     })
