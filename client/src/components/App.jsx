@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 
 import { Button, Grid, Row, Col, Jumbotron, FormControl } from 'react-bootstrap'
-import ReactBootstrapSlider from 'react-bootstrap-slider'
 
 
 import chartUtil from '../utils/chartData.jsx'
@@ -17,6 +16,13 @@ export default class App extends React.Component {
       cities: [],
       cityCount: 0,
       units: 'C'
+    }
+
+    this.center = {
+      textAlign: 'center'
+      // float: 'none',
+      // marginLeft: 'auto',
+      // marginRight: 'auto'
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -104,6 +110,10 @@ export default class App extends React.Component {
       units: (this.state.units === 'F' ? 'C' : 'F')
     })
   }
+
+  changeForecast(){
+
+  }
   
   render () {
     return (
@@ -129,14 +139,28 @@ export default class App extends React.Component {
               </datalist>
               <Button bsStyle="primary" onClick={this.handleSubmit}>Add to graph</Button>
             </div>
-            <div>
+            <br/>
+            <div className="text-center">
               <input type="button" onClick={this.switchUnits} value={"Switch to " + (this.state.units ==='F' ? 'Celcius' : 'Fahrenheit')}></input>
             </div>
 
             </Col>
-            <Col lg={10}><div id="chart-data"></div></Col>
-          </Row>
-          <Row>
+            <Col lg={10}>
+              <Row><div id="chart-data"></div></Row>
+              <Row className="text-center">
+                <h3 className="text-center">Forecast Length</h3>
+                <Button bsStyle="primary" onClick={this.changeForecast(6)}>6</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(7)}>7</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(8)}>8</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(9)}>9</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(10)}>10</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(11)}>11</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(12)}>12</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(13)}>13</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(14)}>14</Button>
+                <Button bsStyle="primary" onClick={this.changeForecast(15)}>15</Button>
+              </Row>
+            </Col>
           </Row>
         </Grid>
       </div>

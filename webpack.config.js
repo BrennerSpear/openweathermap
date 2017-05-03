@@ -24,11 +24,11 @@ var config = {
     ]
   },
 
-  resolve: {
-    alias: {
-         "jquery": path.join(__dirname, "./jquery-stub.js")
-    }
-  },
+  // resolve: {
+  //   alias: {
+  //        "jquery": path.join(__dirname, "./jquery-stub.js")
+  //   }
+  // },
 
   devtool: 'source-map'
 }
