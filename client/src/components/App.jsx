@@ -11,8 +11,11 @@ export default class App extends React.Component {
     super();
     this.state = {
       city: 'San Francisco',
+      forecastLength: 15,
       chartDataF: chartUtil.initialize(),
       chartDataC: chartUtil.initialize(),
+      currentChartDataF: null,
+      currentChartDataC: null,
       cities: [],
       cityCount: 0,
       units: 'C'
@@ -28,6 +31,7 @@ export default class App extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.switchUnits = this.switchUnits.bind(this)
+    this.switchForecastLength = this.switchForecastLength.bind(this)
   }
 
   componentDidMount() {
@@ -75,10 +79,13 @@ export default class App extends React.Component {
     chartDataF.series.push(averageF)
     chartDataC.series.push(rangeC)
     chartDataC.series.push(averageC)
+    // var [currentChartDataF, currentChartDataC] = chartUtil.trimData(chartDataF, chartDataC, this.forecastLength)
 
     this.setState({
       chartDataF: chartDataF,
       chartDataC: chartDataC,
+      // currentChartDataF: currentChartDataF,
+      // currentChartDataC: currentChartDataC,
       cityCount: this.state.cityCount + 1
     })
 
@@ -103,7 +110,7 @@ export default class App extends React.Component {
   }
 
   switchUnits() {
-    const chartData = this.state.units === 'F' ? this.state.chartDataC : this.state.chartDataF
+    const chartData = this.state.units === 'F' ? this.state.currentChartDataC : this.state.currentChartDataF
     Highcharts.chart('chart-data', chartData)
 
     this.setState({
@@ -111,9 +118,21 @@ export default class App extends React.Component {
     })
   }
 
-  changeForecast(){
+  switchForecastLength(days) {
+    const [currentChartDataF, currentChartDataC] = chartUtil.trimData(this.state.chartDataF, this.state.chartDataC, days)
+    console.log(currentChartDataF)
+    const chartData = this.state.units === 'F' ? currentChartDataF : currentChartDataC
+    console.log('lets go')
+    Highcharts.chart('chart-data', chartData)
+
+    this.setState({
+      currentChartDataF: currentChartDataF,
+      currentChartDataC: currentChartDataC,
+      forecastLength: days
+    })
 
   }
+
   
   render () {
     return (
@@ -149,16 +168,16 @@ export default class App extends React.Component {
               <Row><div id="chart-data"></div></Row>
               <Row className="text-center">
                 <h3 className="text-center">Forecast Length</h3>
-                <Button bsStyle="primary" onClick={this.changeForecast(6)}>6</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(7)}>7</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(8)}>8</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(9)}>9</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(10)}>10</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(11)}>11</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(12)}>12</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(13)}>13</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(14)}>14</Button>
-                <Button bsStyle="primary" onClick={this.changeForecast(15)}>15</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(6)}>6</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(7)}>7</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(8)}>8</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(9)}>9</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(10)}>10</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(11)}>11</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(12)}>12</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(13)}>13</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(14)}>14</Button>
+                <Button bsStyle="primary" onClick={() => this.switchForecastLength(15)}>15</Button>
               </Row>
             </Col>
           </Row>

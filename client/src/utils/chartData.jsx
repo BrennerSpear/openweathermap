@@ -1,3 +1,5 @@
+var cloneDeep = require('lodash.clonedeep')
+
 exports.initialize = function() {
   return {
     title: {
@@ -80,3 +82,29 @@ exports.createCityData = function(name, rangesF, rangesC, colorInteger) {
       }]
 
 }
+
+var trimSingleSet = function(data, days) {
+  var current = JSON.parse(JSON.stringify(data))
+  for(var i=0; i<current.series.length; i++) {
+    current.series[i].data.splice(days)
+  }
+  return current
+}
+
+exports.trimData = function(dataF, dataC, days) {
+  var currentF = trimSingleSet(dataF, days)
+  var currentC = trimSingleSet(dataC, days)
+  return [currentF, currentC]
+}
+
+
+
+
+
+
+
+
+
+
+
+
