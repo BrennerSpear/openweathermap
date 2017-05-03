@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import axios from 'axios'
 
 import chartUtil from '../utils/chartData.jsx'
 
@@ -46,13 +47,26 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.runCharts()
+    this.getWeatherData()
+  }
+
+  getWeatherData() {
+    axios.get('/weather/')
+    .then(data => {
+      const city = data.data.city
+      const country = data.data.country
+      const ranges = data.data.ranges
+      const weather = data.data.weather
+      this.runCharts(city, ranges)
+    })
+    .catch(err => {
+      console.log('err:', err)
+    })
   }
   
-  runCharts() {
-
+  runCharts(city, ranges) {
     var chartData = chartUtil.initialize()
-    var [ny1, ny2] = chartUtil.createCityData('New York', ranges, 0)
+    var [ny1, ny2] = chartUtil.createCityData(city, ranges, 0)
     chartData.series.push(ny1)
     chartData.series.push(ny2)
 
