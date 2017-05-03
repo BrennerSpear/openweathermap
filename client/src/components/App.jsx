@@ -173,7 +173,7 @@ export default class App extends React.Component {
             <Col lg={10}>
               <Row><div id="chart-data"></div></Row>
               <Row className="text-center">
-                <h3 className="text-center">Forecast Length</h3>
+                <h3 className="text-center">Forecast Length (days)</h3>
                 <Button bsStyle="primary" onClick={() => this.switchForecastLength(6)}>6</Button>
                 <Button bsStyle="primary" onClick={() => this.switchForecastLength(7)}>7</Button>
                 <Button bsStyle="primary" onClick={() => this.switchForecastLength(8)}>8</Button>
