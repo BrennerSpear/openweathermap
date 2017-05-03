@@ -42,7 +42,7 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: 'hello world'
+      chartData: chartUtil.initialize()
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -73,10 +73,12 @@ export default class App extends React.Component {
   }
   
   runCharts(city, ranges) {
-    var chartData = chartUtil.initialize()
-    var [ny1, ny2] = chartUtil.createCityData(city, ranges, 0)
-    chartData.series.push(ny1)
-    chartData.series.push(ny2)
+    var chartData = this.state.chartData
+    var [range, average] = chartUtil.createCityData(city, ranges, 0)
+    chartData.series.push(range)
+    chartData.series.push(average)
+
+    this.setState({chartData: chartData})
 
     Highcharts.chart('chart-data', chartData)
   }
