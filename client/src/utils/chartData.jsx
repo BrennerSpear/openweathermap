@@ -87,6 +87,7 @@ var trimSingleSet = function(data, days) {
   var current = JSON.parse(JSON.stringify(data))
   for(var i=0; i<current.series.length; i++) {
     current.series[i].data.splice(days)
+    current.tooltip.formatter = function () {return 'Weather: <b>' + this.point.weather + '</b>'}
   }
   return current
 }
