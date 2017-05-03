@@ -1,6 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 
+import { Button, Grid, Row, Col, Jumbotron, FormControl } from 'react-bootstrap'
+import ReactBootstrapSlider from 'react-bootstrap-slider'
+
+
 import chartUtil from '../utils/chartData.jsx'
 
 export default class App extends React.Component {
@@ -104,23 +108,37 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        <div id="chart-data"></div>
-        <div>
-          city:
-          <input type="text" list="cities" name="city" value={this.state.city} onChange={this.handleChange}></input>
-          <datalist id="cities">
-            <option value="San Francisco"></option>
-            <option value="New York"></option>
-            <option value="Berlin"></option>
-            <option value="San Jose"></option>
-            <option value="Paris"></option>
-            <option value="Tokyo"></option>
-          </datalist>
-          <button onClick={this.handleSubmit}>Add to graph</button>
-          </div>
-          <div>
-          <input type="button" onClick={this.switchUnits} value={"Switch to " + (this.state.units ==='F' ? 'Celcius' : 'Fahrenheit')}></input>
-          </div>
+        <Grid>
+          <Row>
+            <Jumbotron>
+              <h1 className="text-center">Open Weather Forecasts</h1>
+            </Jumbotron>
+          </Row>
+          <Row>
+            <Col lg={2}>
+            <div>
+              <h3>city:</h3>
+              <FormControl type="text" list="cities" name="city" value={this.state.city} onChange={this.handleChange}></FormControl>
+              <datalist id="cities">
+                <option value="San Francisco"></option>
+                <option value="New York"></option>
+                <option value="Berlin"></option>
+                <option value="San Jose"></option>
+                <option value="Paris"></option>
+                <option value="Tokyo"></option>
+              </datalist>
+              <Button bsStyle="primary" onClick={this.handleSubmit}>Add to graph</Button>
+            </div>
+            <div>
+              <input type="button" onClick={this.switchUnits} value={"Switch to " + (this.state.units ==='F' ? 'Celcius' : 'Fahrenheit')}></input>
+            </div>
+
+            </Col>
+            <Col lg={10}><div id="chart-data"></div></Col>
+          </Row>
+          <Row>
+          </Row>
+        </Grid>
       </div>
     )
   }
