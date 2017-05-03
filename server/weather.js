@@ -8,7 +8,7 @@ weather.defaults({
 
 const getForcaseAysnc = function(config) {
   return new Promise(function(resolve,reject) {
-    weather.forecast(config, function(err, config) {
+    weather.daily(config, function(err, config) {
       if(err !== null) return reject(err)
       resolve(config)
     })
@@ -32,9 +32,9 @@ const getRelevantData = function(data) {
   var weatherDesc
 
   for(var i=0; i<days.length; i++) {
-    date = days[i].dt * 8000
-    min = days[i].main.temp_min
-    max = days[i].main.temp_max
+    date = days[i].dt * 1000
+    min = days[i].temp.min
+    max = days[i].temp.max
     weatherDesc = days[i].weather[0].description
 
     ranges.push({x: date, low: min, high: max, weather: weatherDesc})
@@ -51,6 +51,7 @@ exports.forecast = function(req, res) {
   }
   getForcaseAysnc(options)
   .then(data => {
+    // res.send(data)
     const [city, country, ranges, weather] = getRelevantData(data)
     const relevantData = {
       city: city,
