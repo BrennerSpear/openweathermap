@@ -34,7 +34,7 @@ const getRelevantData = function(data) {
   var weatherDesc
 
   for(var i=0; i<days.length; i++) {
-    date = days[i].dt
+    date = days[i].dt * 8000
     min = days[i].main.temp_min
     max = days[i].main.temp_max
     weatherDesc = days[i].weather[0].description
